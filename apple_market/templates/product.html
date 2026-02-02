@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+<img src="{{ url_for('static', filename='uploads/' + product.image) }}" width="300">
+<h2>{{ product.title }}</h2>
+<p>{{ product.description }}</p>
+<p>{{ product.price }} ₽</p>
+<a href="/chat/{{ current_user.id }}">Написать админу</a>
+</div>
+{% endblock %}

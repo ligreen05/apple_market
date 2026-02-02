@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить телефон</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Добавить телефон</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Главная</a>
+            <a href="{{ url_for('logout') }}">Выйти</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data" class="add-product-form">
+            
+            <label>Модель:</label>
+            <select name="model" required>
+                {% for model in allowed_models %}
+                <option value="{{ model }}">{{ model }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Цена:</label>
+            <input type="number" name="price" required>
+
+            <label>Состояние:</label>
+            <select name="condition" required>
+                <option>Отличное</option>
+                <option>Хорошее</option>
+                <option>Удовлетворительное</option>
+                <option>Требуется ремонт</option>
+            </select>
+
+            <label>Процент батареи:</label>
+            <input type="number" name="battery" min="0" max="100" required>
+
+            <label>Память:</label>
+            <input type="text" name="memory" required>
+
+            <label>Цвет:</label>
+            <input type="text" name="color" required>
+
+            <label>Комплект:</label>
+            <input type="text" name="package">
+
+            <label>Год выпуска:</label>
+            <input type="text" name="year" required>
+
+            <label>Описание:</label>
+            <textarea name="description" rows="3"></textarea>
+
+            <label>Фото (можно выбрать несколько):</label>
+            <input type="file" name="images" multiple>
+
+            <button type="submit">Добавить телефон</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 | Контакты: 8 964 184 48 14, 8 919 87 68</p>
+    </div>
+</footer>
+
+</body>
+</html>

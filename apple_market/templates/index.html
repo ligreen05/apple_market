@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скупка / Продажа Apple Ligreen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="container">
+
+        <!-- Контакты -->
+        <div class="top-contacts">
+            📞 8 964 184 48 14
+            <span>|</span>
+            💬 <a href="https://t.me/ligreen05" target="_blank">@ligreen05</a>
+        </div>
+
+        <h1>Скупка / Продажа Apple Ligreen</h1>
+
+        <nav>
+            {% if current_user.is_authenticated %}
+                <span>Привет, {{ current_user.username }}!</span>
+                {% if current_user.is_admin %}
+                    <a href="{{ url_for('add_product') }}">Добавить телефон</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}">Выйти</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Войти</a>
+                <a href="{{ url_for('register') }}">Регистрация</a>
+            {% endif %}
+        </nav>
+
+    </div>
+</header>
+
+
+<main>
+    <div class="container">
+        <form method="GET" class="filter-form">
+            <label>Выберите модель:</label>
+            <select name="model">
+                <option value="">Все модели</option>
+                {% for model in allowed_models %}
+                    <option value="{{ model }}" {% if selected_model==model %}selected{% endif %}>{{ model }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Фильтр</button>
+        </form>
+
+        <div class="products">
+            {% for product in products %}
+<div class="product-card">
+    {% if product.images %}
+        <img src="{{ url_for('static', filename='uploads/' + product.images[0].filename) }}" alt="{{ product.title }}">
+    {% else %}
+        <img src="{{ url_for('static', filename='placeholder.png') }}" alt="{{ product.title }}">
+    {% endif %}
+    <h3>{{ product.model }}</h3>
+    <h3>{{ product.title }}</h3>
+    <p>Цена: {{ product.price }} ₽</p>
+    <p>Состояние: {{ product.condition }}</p>
+    <p>Батарея: {{ product.battery }}%</p>
+    <p>Память: {{ product.memory }}</p>
+    <p>Цвет: {{ product.color }}</p>
+    <p>Комплект: {{ product.package }}</p>
+    <p>Год: {{ product.year }}</p>
+    <p>{{ product.description }}</p>
+
+    {% if product.images|length > 1 %}
+    <div class="more-images">
+        {% for img in product.images[1:] %}
+        <img src="{{ url_for('static', filename='uploads/' + img.filename) }}" alt="Фото {{ loop.index }}">
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if current_user.is_authenticated and current_user.is_admin %}
+<form action="{{ url_for('delete_product', product_id=product.id) }}"
+      method="POST"
+      onsubmit="return confirm('Удалить телефон?');">
+
+    <button class="delete-btn">🗑 Удалить</button>
+
+</form>
+{% endif %}
+
+</div>
+{% endfor %}
+
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2026 | Контакты: 8 964 184 48 14, 8 919 913 87 68</p>
+    </div>
+</footer>
+
+</body>
+</html>

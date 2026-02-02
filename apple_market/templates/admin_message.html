@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Чаты</h2>
+{% for u in users %}
+<div class="card">
+<p>{{ u.username }}</p>
+<a href="/chat/{{ u.id }}">Открыть чат</a>
+</div>
+{% endfor %}
+{% endblock %}

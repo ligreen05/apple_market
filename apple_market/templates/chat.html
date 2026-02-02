@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Чат</h2>
+
+<div>
+{% for m in messages %}
+<p><b>{{ m.sender }}:</b> {{ m.text }}</p>
+{% endfor %}
+</div>
+
+<form method="post">
+<input name="text" placeholder="Сообщение">
+<button>Отправить</button>
+</form>
+{% endblock %}
